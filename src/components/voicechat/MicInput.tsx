@@ -22,7 +22,7 @@ export default function VoiceMic() {
 
     recognition.onstart = () => {
       setListening(true);
-      toast("🎤 Listening...");
+      toast("🎙️ Listening...");
     };
 
     recognition.onresult = async (event) => {
@@ -34,12 +34,6 @@ export default function VoiceMic() {
       // Send to AI
       const aiReply = await sendToAI(transcript);
       setReply(aiReply);
-
-      if (aiReply.startsWith("❌")) {
-        toast.error("❌ AI failed to respond!");
-      } else {
-        toast.success("✅ AI replied!");
-      }
     };
 
     recognition.onerror = (event) => {
@@ -61,9 +55,8 @@ export default function VoiceMic() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
-        },Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
           messages: [{ role: "user", content: message }],
@@ -74,5 +67,9 @@ export default function VoiceMic() {
       return data.choices?.[0]?.message?.content || "No reply from AI.";
     } catch (error) {
       console.error("AI error:", error);
-      return <div>❌ something went wrong</div>;
+      return <div>⚠️ MicInput component loaded! (You can customize this UI)</div>;
+    }
+  };
 
+  return <div>✅ MicInput component loaded! (You can customize this UI)</div>;
+}

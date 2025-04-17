@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Toaster position="top-center" richColors />
-      <MicInput />
+      <VoiceMic />
     </>
   );
 }
